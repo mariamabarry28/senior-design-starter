@@ -57,3 +57,84 @@ implement more than one, small and well-executed beats sprawling.
 - **`ModuleNotFoundError`:** make sure your virtual environment is
   activated and `pip install -r requirements.txt` completed without
   errors.
+
+
+## Quick Reference: Flask & JS Patterns
+
+You don't need deep experience with Flask or JavaScript to do HW1,
+but if you haven't used either before, here's the pattern this app
+follows. Everything you need for the four HW1 features looks like
+one of the examples below.
+
+### Flask: reading data from a request
+
+```python
+@app.route("/api/example", methods=["POST"])
+def example():
+    data = request.get_json(force=True)   # parses the JSON body
+    value = data.get("some_key")          # pull out a field, like a dict
+    return jsonify({"result": value})     # send JSON back
+```
+
+That's the whole pattern used throughout `app.py`. A route is a
+Python function. It reads whatever the frontend sent in the request
+body, does something with it, and returns JSON.
+
+### Flask: adding a new route
+
+```python
+@app.route("/api/regenerate", methods=["POST"])
+def regenerate():
+    # your logic here
+    return jsonify({"reply": "..."})
+```
+
+Copy the shape of an existing route (`chat()` in `app.py` is the best
+example), rename it, change what's inside.
+
+### JavaScript: calling your Flask route from the frontend
+
+```javascript
+const res = await fetch("/api/example", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ some_key: "some value" }),
+});
+const data = await res.json();
+console.log(data.result);
+```
+
+This is the same pattern used in `static/chat.js`'s `fetch("/api/chat", ...)`
+call. `fetch` sends a request, `await res.json()` reads the response
+back as a JavaScript object.
+
+### JavaScript: adding a UI element
+
+```javascript
+// creating and inserting an element
+const div = document.createElement("div");
+div.textContent = "some text";
+document.getElementById("chat-log").appendChild(div);
+
+// reacting to a click
+document.getElementById("some-button").addEventListener("click", () => {
+  // your logic here
+});
+```
+
+`static/chat.js` already does both of these (see `appendMessage` and
+the form's `submit` listener). Copy the pattern rather than starting
+from a blank file.
+
+### If you get stuck
+
+- Read the existing code in `app.py` and `chat.js` before writing
+  anything new, most of what you need is a small variation on a
+  pattern that's already there.
+- Python errors print to the terminal where `python app.py` is
+  running, read the last few lines, they usually say exactly what
+  broke.
+- JavaScript errors show up in the browser console (right-click the
+  page, Inspect, Console tab).
+- Come to office hours before you're stuck for more than 20-30
+  minutes on something that feels like it should be simple.
