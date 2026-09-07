@@ -9,7 +9,12 @@
   <main class="chat-container">
     <h1>Local Chat <span class="badge">starter app</span></h1>
 
-    <div id="chat-log" class="chat-log"></div>
+    <div id="chat-log" class="chat-log"> <!--Opens a container div, attribute id= "chat-log"-->
+    {% for item in messages %} <!--Jinja Loop, messages is passed from index() in app.py, item is one dict since conversations (messages) is a list of dicts-->
+    <div class="msg {{item.role}}">{{item.content}}</div> <!--retrieves the role and content from each item (dict) in messages. "msg item.role" helps the chat history distinguish the sender of the message-->
+      {% endfor %} <!--Ends block-->
+</div>
+                                          
 
     <form id="chat-form">
       <input
