@@ -10,7 +10,7 @@ running. It uses MockModelClient by default (see model_client.py).
 """
 
 from flask import Flask, render_template, request, jsonify #The class that makes the web application itself
-#The above imnports allows for the application to work as intended through requests
+#The above imports allows for the application to work as intended through requests
 #redner_templte is what I will manipulate for the conversation history save
 from model_client import MockModelClient #Importing the local python file
 
@@ -18,7 +18,7 @@ app = Flask(__name__) #Creates the actual application
 model_client = MockModelClient() #Reused instance
 
 # In-memory, single global conversation. Fine for a local demo app;
-# intentionally not session-based or persisted yet., GOING TO CHANGE THIS
+# intentionally not session-based or persisted yet.
 #
 # TODO (HW1, "conversation history"): if you pick this feature, make
 # this real: persist history per session/user, and display the full
